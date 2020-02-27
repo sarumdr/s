@@ -10,6 +10,8 @@ const jwt=require('jsonwebtoken');
 
 
 let User=require('../model/user');
+let Blood=require('../model/blood');
+
 
 app.use(bodyParser.urlencoded({
 	extended: true
@@ -149,4 +151,25 @@ app.post("/login", (req, res, next) => {
 	//   });
   });
 
+
+  app.post('/donate',(req,res)=>{
+
+	
+		let blood=new Blood({
+			bloodgroup:req.body.bloodgroup,
+			locality:req.body.locality,
+		
+			});
+	
+		let promise = blood.save()
+		promise.then((blood)=>{
+			console.log(blood);
+			res.redirect('/');
+			//res.send({status:"done"})
+		})
+	
+	});
+	
+	
+	
 module.exports = app;
